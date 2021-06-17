@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - aka-param-env-pruning
+      - main
 
   schedule:
   - cron: "30 * * * *"
