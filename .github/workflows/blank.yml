@@ -1,0 +1,49 @@
+name: "Prune Preview Environments"
+
+on:
+  push:
+    branches:
+      - aka-param-env-pruning
+      - main
+
+  schedule:
+  - cron: "30 * * * *"
+  workflow_dispatch:
+    inputs:
+      depth:
+        description: 'Pruning depth'
+        required: true
+        default: '30'
+      extra:
+        description: 'Extra options for pruning' # TODO make `--force` default and consider adding `--timeout xx`
+        required: false
+        default: ''
+
+jobs:
+  prune-preview-environments:
+    runs-on:
+      - ubuntu-latest
+    steps:
+    - name: Cancel Previous Runs
+      uses: styfle/cancel-workflow-action@0.9.0
+      with:
+        access_token: ${{ github.token }}
+
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        ref: main
+
+    - name: prune
+      env:
+        GITHUB_USER: apolloio
+        GITHUB_TOKEN: ${{ github.token }}
+        DEPTH: ${{ github.event.inputs.depth }}
+        EXTRA_PARAMS: ${{ github.event.inputs.extra }}
+      run: |
+        set -eux -o pipefail
+        mkdir ~/.spin
+        echo "$USER" > ~/.spin/config
+        # ci/container/run prune leadgenie-preview $EXTRA_PARAMS --depth "$DEPTH"
+        env
+        /bin/echo prune leadgenie-preview ${{ github.event.inputs.extra }} --depth ${{ github.event.inputs.depth }}
