@@ -46,4 +46,4 @@ jobs:
         echo "$USER" > ~/.spin/config
         # ci/container/run prune leadgenie-preview $EXTRA_PARAMS --depth "$DEPTH"
         env
-        /bin/echo prune leadgenie-preview ${{ github.event.inputs.extra }} --depth ${{ github.event.inputs.depth }}
+        /bin/echo prune leadgenie-preview --depth ${INPUT_DEPTH:-30} ${INPUT_EXTRA:-} trailing
