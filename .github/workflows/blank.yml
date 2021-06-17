@@ -13,7 +13,7 @@ on:
       depth:
         description: 'Pruning depth'
         required: true
-        default: '30'
+        default: '300'
       extra:
         description: 'Extra options for pruning' # TODO make `--force` default and consider adding `--timeout xx`
         required: false
@@ -46,4 +46,4 @@ jobs:
         echo "$USER" > ~/.spin/config
         # ci/container/run prune leadgenie-preview $EXTRA_PARAMS --depth "$DEPTH"
         env
-        /bin/echo prune leadgenie-preview --depth ${INPUT_DEPTH:-30} ${INPUT_EXTRA:-} trailing
+        /bin/echo prune leadgenie-preview --depth ${DEPTH:-30} ${EXTRA_PARAMS:-} trailing
