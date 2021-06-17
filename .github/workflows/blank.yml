@@ -42,7 +42,7 @@ jobs:
       run: |
         set -eux -o pipefail
         mkdir ~/.spin
-        echo "$OPS_SPIN_CONFIG" > ~/.spin/config
+        echo "$USER" > ~/.spin/config
         # ci/container/run prune leadgenie-preview $EXTRA_PARAMS --depth "$DEPTH"
         env | grep '30'
         ci/container/run prune leadgenie-preview ${{ github.event.inputs.extra }} --depth ${{ github.event.inputs.depth }}
